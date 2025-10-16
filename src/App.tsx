@@ -1,10 +1,44 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from "react";
+import reactLogo from "./assets/react.svg";
+import viteLogo from "/vite.svg";
+import "./App.css";
+import {
+  useAddMatchGameMutation,
+  useDeleteMatchGameMutation,
+  useGetMatchGamesQuery,
+  useUpdateMatchGameMutation,
+} from "./shared/api/matchGamesApi";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
+  const { data: matchGamesList = [] } = useGetMatchGamesQuery();
+  const [addNewGame] = useAddMatchGameMutation();
+  const [deleteGame] = useDeleteMatchGameMutation();
+  const [updateGame] = useUpdateMatchGameMutation();
+
+  const handlePost = async () => {
+    await addNewGame({
+      id: matchGamesList.length,
+      left: "Лошадь",
+      right: "horse",
+    }).unwrap();
+  };
+
+  const handleDelete = async () => {
+    await deleteGame(matchGamesList.length - 1).unwrap();
+  };
+
+  const handleUpdate = async () => {
+    await updateGame({
+      id: matchGamesList.length - 1,
+      left: "Жопа",
+      right: "Ass",
+    }).unwrap();
+  };
+
+  useEffect(() => {
+    console.log(matchGamesList);
+  }, [matchGamesList]);
 
   return (
     <>
@@ -21,6 +55,15 @@ function App() {
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
+        <button style={{ marginLeft: "8px" }} onClick={handlePost}>
+          post
+        </button>
+        <button style={{ marginLeft: "8px" }} onClick={handleDelete}>
+          delete last item
+        </button>
+        <button style={{ marginLeft: "8px" }} onClick={handleUpdate}>
+          change inputs for last item
+        </button>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
@@ -29,7 +72,7 @@ function App() {
         Click on the Vite and React logos to learn more
       </p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
