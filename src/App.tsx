@@ -55,13 +55,13 @@ function App() {
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
-        <button style={{ marginLeft: "8px" }} onClick={handlePost}>
+        <button style={{ marginLeft: "9px" }} onClick={handlePost}>
           post
         </button>
-        <button style={{ marginLeft: "8px" }} onClick={handleDelete}>
+        <button style={{ marginLeft: "9px" }} onClick={handleDelete}>
           delete last item
         </button>
-        <button style={{ marginLeft: "8px" }} onClick={handleUpdate}>
+        <button style={{ marginLeft: "9px" }} onClick={handleUpdate}>
           change inputs for last item
         </button>
         <p>
