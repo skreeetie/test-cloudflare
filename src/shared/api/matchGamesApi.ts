@@ -12,9 +12,11 @@ type MatchGameOptional = {
   right?: string;
 };
 
+const API_BASE_URL = import.meta.env.API_BASE_URL || "";
+
 export const matchGamesApi = createApi({
   reducerPath: "matchGames",
-  baseQuery: fetchBaseQuery({ baseUrl: "/api/" }),
+  baseQuery: fetchBaseQuery({ baseUrl: `${API_BASE_URL}/api/` }),
   tagTypes: ["MatchGames"],
   endpoints: (builder) => ({
     getMatchGames: builder.query<MatchGame[], void>({
@@ -60,5 +62,5 @@ export const {
   useGetMatchGamesQuery,
   useAddMatchGameMutation,
   useDeleteMatchGameMutation,
-  useUpdateMatchGameMutation
+  useUpdateMatchGameMutation,
 } = matchGamesApi;
