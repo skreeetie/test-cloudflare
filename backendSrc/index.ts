@@ -10,15 +10,17 @@ import type {
 export type Env = {
   DB: D1Database;
   ASSETS: Fetcher;
+  VITE_API_BASE_URL?: string;
 };
-
-// Register all routes
-registerAllRoutes(router);
-// Static assets fallback
-router.all("*", (request: Request, env: Env) => env.ASSETS.fetch(request));
 
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext) {
+    const apiBase = env.VITE_API_BASE_URL || '';
+
+    registerAllRoutes(router, apiBase);
+
+    router.all("*", (request: Request, env: Env) => env.ASSETS.fetch(request));
+
     const response = await router.fetch(request, env, ctx);
 
     return response;
