@@ -31,12 +31,12 @@ export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext) {
     const apiBase = env.VITE_API_BASE_URL || "";
 
-    registerAllRoutes(router, apiBase);
-
     if (request.method === "OPTIONS") {
       return handleCors(request);
     }
-
+    
+    registerAllRoutes(router, apiBase);
+    
     router.all("*", (request: Request, env: Env) => env.ASSETS.fetch(request));
 
     const response = await router.fetch(request, env, ctx);
